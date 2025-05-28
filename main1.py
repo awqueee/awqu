@@ -21,6 +21,7 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardButton, InlineKe
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram import BaseMiddleware
 from aiogram.types import Update
+from aiogram.client.bot import DefaultBotProperties
 from typing import Callable, Dict, Any, Awaitable
 
 API_TOKEN = '7799452151:AAGCCzzHg7vght2oOFTMyFcnVdkH2Phipnw'
@@ -32,7 +33,10 @@ Base = declarative_base()
 engine = create_async_engine('sqlite+aiosqlite:///giveaway.db', echo=False)
 Session = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
-bot = Bot(token=API_TOKEN, parse_mode=ParseMode.HTML)
+bot = bot = Bot(
+    token=API_TOKEN,
+    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+)
 dp = Dispatcher(storage=MemoryStorage())
 router = Router()
 dp.include_router(router)
